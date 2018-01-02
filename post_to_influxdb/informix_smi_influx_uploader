@@ -1,0 +1,257 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+use DBI;
+use Getopt::Std;
+use JSON;
+use Sys::Hostname;
+use WWW::Curl::Easy;
+use vars qw(%dbh %sth %dataidx %subidx %colname %lastval $dontspamlogs);
+
+$SIG{INT} = \&dbdisconnect;
+
+warn "http_proxy is set to $ENV{'http_proxy'}\n" if $ENV{'http_proxy'};
+
+my (%opts);
+getopt('icuh', \%opts);
+my $interval = 10;
+if ($opts{'i'}) {
+	$interval = $opts{'i'};
+}
+else {
+	warn "Using default interval of 10 seconds.\n";
+}
+my $config = './informix_smi.json';
+if ($opts{'c'}) {
+	$config = $opts{'c'};
+}
+my $url = '';
+if ($opts{'u'}) {
+	$url = $opts{'u'};
+}
+else {
+	&print_help;
+}
+if ($opts{'h'}) {
+	&print_help;
+}
+
+my $dontspamlogs = 0;
+my $hostname = hostname;
+
+my @environment = qw(INFORMIXDIR INFORMIXSERVER);
+foreach (@environment) {
+    die print "$_ is not set.\n" unless $ENV{$_};
+}
+
+if ($ARGV[0]) {
+	$config = $ARGV[0];
+}
+
+my $json = '';
+open('CONFIG', $config) or die print "Unable to open JSON config file $config.\n";
+while (<CONFIG>) {
+	$json .= $_;	
+}
+close (CONFIG);
+my $informix_smi = decode_json $json;
+die print "No sources found in $config\n" if !$$informix_smi{'sources'};
+
+&dbconnect('sysmaster');
+
+my $start = time;
+my $firsttime = 1;
+while (1) {
+	if (($interval - (time - $start)) % $interval == 0) {
+		&collect_metrics(\$firsttime);
+	}
+	sleep 1;
+	$firsttime = 0;
+}
+
+sub collect_metrics () {
+
+	my $firsttime = shift;
+	my $time = time;
+	$time .= '000000000';
+	my $payload = '';
+
+	for (my $i = 0; $i < scalar(@{$$informix_smi{'sources'}}); $i++) {
+		my $source = $$informix_smi{'sources'}[$i];
+		#print "Processing $$source{'name'}, \"$$source{'type'}{'enabled'}\"\n";
+		if (!defined($$source{'type'}{'enabled'}) || $$source{'type'}{'enabled'} ne 'false') {
+			$$source{'type'}{'delta'} = 'false' if !$$source{'type'}{'delta'} || $$source{'type'}{'delta'} ne 'true';
+			my $db = 'sysmaster';
+			if ($$source{'type'}{'database'}) {
+				$db = $$source{'type'}{'database'};
+				&dbconnect($db) if !$dbh{$db};
+			}
+			if (!$sth{$db} || !$sth{$db}{$$source{'name'}}) {
+				$sth{$db}{$$source{'name'}} = $dbh{$db}->prepare($$source{'type'}{'query'});
+			}
+			$sth{$db}{$$source{'name'}}->execute();
+			my $rows = 0;
+			while (my (@val) = $sth{$db}{$$source{'name'}}->fetchrow_array()) {
+				if ($$firsttime && $rows == 0 || !$colname{$$source{'name'}}) {
+					&parse(\@val, $source, \$sth{$db}{$$source{'name'}});
+				}
+				my (@tags);
+				if ($subidx{$$source{'name'}}) {
+					for (my $j = 0; $j < scalar(@{$subidx{$$source{'name'}}}); $j++) {
+						push (@tags, $val[$subidx{$$source{'name'}}[$j]]);
+					}
+				}
+				if ($dataidx{$$source{'name'}}) {
+					for (my $j = 0; $j < scalar(@{$dataidx{$$source{'name'}}}); $j++) {
+						&prepare_metrics(\$$source{'name'}, \@tags, \@val, \$hostname, \$time, \$dataidx{$$source{'name'}}[$j], \$$source{'type'}{'delta'}, $firsttime, \$payload);
+					}
+				}
+				else {
+					for (my $j = 0; $j < scalar(@{$colname{$$source{'name'}}}); $j++) {
+						my $isheading = 0;
+						if ($subidx{$$source{'name'}}) {
+							for (my $k = 0; $k < scalar(@{$subidx{$$source{'name'}}}); $k++) {
+								if ($subidx{$$source{'name'}}[$k] == $j) {
+									$isheading = 1;
+								}
+							}
+						}
+						if (!$isheading) {
+							&prepare_metrics(\$$source{'name'}, \@tags, \@val, \$hostname, \$time, \$j, \$$source{'type'}{'delta'}, $firsttime, \$payload);
+						}
+					}
+				}
+			$rows++;
+			}
+		}
+	}
+	&upload_to_influx(\$payload) if !$$firsttime;
+}
+
+sub parse () {
+
+	my $val = shift;
+	my $source = shift;
+	my $sth = shift;
+
+	for (my $j = 0; $j < scalar(@{$val}); $j++) {
+		$colname{$$source{'name'}}[$j] = $$sth->{NAME}->[$j];
+		if ($$source{'type'}{'dataFields'}) {
+			for (my $k = 0; $k < scalar(@{$$source{'type'}{'dataFields'}}); $k++) {
+				if ($colname{$$source{'name'}}[$j] eq $$source{'type'}{'dataFields'}[$k]) {
+					push(@{$dataidx{$$source{'name'}}}, $j);
+					#print "Data index: $$source{'name'} -> $j\n";
+				}
+			}
+		}
+		if ($$source{'type'}{'subPaths'}) {
+			for (my $k = 0; $k < scalar(@{$$source{'type'}{'subPaths'}}); $k++) {
+				if ($colname{$$source{'name'}}[$j] eq $$source{'type'}{'subPaths'}[$k]) {
+					push(@{$subidx{$$source{'name'}}}, $j);
+					#print "Sub path: $$source{'name'} -> $j\n";
+				}
+			}
+		}
+	}
+}
+
+sub prepare_metrics () {
+
+	my $sourcename = shift;
+	my $tags = shift;
+	my $val = shift;
+	my $hostname = shift;
+	my $time = shift;
+	my $j = shift;
+	my $isdelta = shift;
+	my $firsttime = shift;
+	my $payload = shift;
+
+	my $metric = "${colname{$$sourcename}[$$j]}";
+	for (my $k = 0; $k < scalar(@{$tags}); $k++) {	
+		$metric .= '-'.$${tags[$k]};
+	}
+	$metric =~ s/,/\\,/g;
+
+	my $value = $${val[$$j]};
+	if ($$isdelta eq 'true') {
+		$value -= $lastval{$metric}{$$sourcename}[$$j] if !$$firsttime;
+		$lastval{$metric}{$$sourcename}[$$j] = $${val[$$j]};
+	}
+
+	return if $$firsttime;
+
+	$value =~ s/,/\\,/g;
+	$metric .= ",host=$${hostname},INFORMIXSERVER=$ENV{'INFORMIXSERVER'},category=$$sourcename,delta=$${isdelta} value=${value} $${time}\n";
+	$$payload .= $metric;
+}
+
+sub upload_to_influx {
+
+	my $payload = shift;
+
+	my ($response_body);
+	my $curl = WWW::Curl::Easy->new;
+	$curl->setopt(CURLOPT_HEADER, 1);
+	$curl->setopt(CURLOPT_URL, $url);
+	$curl->setopt(CURLOPT_POST, 1);
+	$curl->setopt(CURLOPT_POSTFIELDS, $$payload);
+	$curl->setopt(CURLOPT_POSTFIELDSIZE, length($$payload) );
+	$curl->setopt(CURLOPT_WRITEDATA, \$response_body);
+	my $retcode = $curl->perform;
+	my $response_code = $curl->getinfo(CURLINFO_HTTP_CODE);
+	if ($retcode != 0 || $response_code != 204) {
+		print ("Error parsing:\n\n$$payload\n\nHTTP $response_code; return code: $retcode ".$curl->strerror($retcode)." ".$curl->errbuf."\n") if !$dontspamlogs;
+		print ("Error parsing:HTTP $response_code; return code: $retcode ".$curl->strerror($retcode)." ".$curl->errbuf."\n") if $dontspamlogs;
+		$dontspamlogs = 1;
+	}
+}
+
+sub dbconnect () {
+
+	my $dbname = shift;
+
+	my %attr = (
+		'PrintError' => 1,
+		'RaiseError' => 1,
+		'AutoCommit' => 1,
+		'ChopBlanks' => 1,
+		'ix_WithoutReplication' => 0,
+	);
+
+	$dbh{$dbname} = DBI->connect("dbi:Informix:${dbname}\@$ENV{'INFORMIXSERVER'}", '', '', \%attr) or die ("$DBI::errstr\n\n");
+	$dbh{$dbname}->do('SET LOCK MODE TO WAIT 5') or die ("Can\'t set lock mode: $DBI::errstr\n");
+}
+
+sub dbdisconnect {
+
+	foreach my $db (keys %dbh) {
+		if ($sth{$db}) {
+			foreach my $source (keys $sth{$db}) {
+				$sth{$db}{$source}->finish();
+			}
+		}
+
+		#print "Disconnecting from $_\@$ENV{'INFORMIXSERVER'}\n";
+		$dbh{$db}->disconnect;
+	}
+	exit;
+}
+
+sub print_help {
+
+	print <<EOT;
+
+    $0 -c <config file> -i <collection interval> -u <URL to Influx DB> -h 
+
+        -c <config file>            path to JSON file containing the collection metrics
+        -i <collection interval>    collection interval in seconds, default 10
+        -u <URL to Influx DB>       URL to POST data to influx using curl
+        -h                          display this help
+
+EOT
+
+	exit 2;
+}
+
