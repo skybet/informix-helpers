@@ -1,0 +1,247 @@
+{
+    "sources": [
+        {
+            "name": "sysprofile",
+            "type": {
+                "enabled": true,
+                "query": "     SELECT       trim(name) as name,       value     FROM       sysmaster:sysprofile     WHERE       name IN ('dskreads', 'bufreads', 'dskwrites', 'bufwrites', 'isamtot', 'isopens', 'isstarts', 'isreads', 'iswrites', 'isrewrites', 'isdeletes', 'iscommits', 'isrollbacks', 'latchwts', 'buffwts', 'lockreqs', 'lockwts', 'ckptwts', 'deadlks', 'lktouts', 'numckpts', 'plgpagewrites', 'plgwrites', 'llgrecs', 'llgpagewrites', 'llgwrites', 'pagreads', 'pagwrites', 'flushes', 'compress', 'fgwrites', 'lruwrites', 'chunkwrites', 'btraidx', 'dpra', 'rapgs_used', 'seqscans', 'totalsorts', 'memsorts', 'disksorts', 'maxsortspace')",
+                "dataFields": [
+                    "value"
+                ],
+                "subPaths": [
+                    "name"
+                ],
+                "useDataField": false,
+                "delta": true,
+                "database": "sysmaster"
+            },
+            "opts": {
+            }
+        },
+        {
+            "name": "sysvpprof",
+            "type": {
+                "enabled": true,
+                "query": "     SELECT       class,       SUM(usercpu) usercpu,       SUM(syscpu) syscpu     FROM       sysmaster:sysvpprof     GROUP BY       class",
+                "dataFields": [
+                    "usercpu",
+                    "syscpu"
+                ],
+                "subPaths": [
+                    "class"
+                ],
+                "delta": true,
+                "database": "sysmaster"
+            },
+            "opts": {
+            }
+        },
+        {
+            "name": "sysptprof-mydatabase",
+            "type": {
+                "enabled": false,
+                "query": "         SELECT           TRIM(dbsname) || '.' || TRIM(tabname) object_name,           SUM(lockreqs) lock_requests,           SUM(lockwts) lock_waits,           SUM(isreads) isam_reads,           SUM(iswrites) isam_writes,           SUM(isrewrites) isam_rewrites,           SUM(isdeletes) isam_deletes,           SUM(bufreads) buffer_reads,           SUM(bufwrites) buffer_writes,           SUM(seqscans) sequential_scans,           SUM(pagreads) page_reads,           SUM(pagwrites) page_writes         FROM           sysptprof p         WHERE           p.dbsname = \"mydatabase\"         GROUP BY           object_name",
+                "dataFields": [
+                    "lock_requests",
+                    "lock_waits",
+                    "isam_reads",
+                    "isam_writes",
+                    "isam_rewrites",
+                    "isam_deletes",
+                    "buffer_reads",
+                    "buffer_writes",
+                    "sequential_scans",
+                    "page_reads",
+                    "page_writes"
+                ],
+                "subPaths": [
+                    "object_name"
+                ],
+                "delta": true,
+                "database": "sysmaster"
+            },
+            "opts": {
+            }
+        },
+        {
+            "name": "sysvplst",
+            "type": {
+                "enabled": true,
+                "query": "     SELECT       classname,       CAST(COUNT(*) - SUM(num_ready) AS INT) idle,       SUM(num_ready) ready,       SUM(total_semops) semops,       SUM(total_busy_wts) busy_waits,       SUM(total_spins) spins     FROM       sysvplst     GROUP BY       classname",
+                "dataFields": [
+                    "idle",
+                    "ready",
+                    "semops",
+                    "busy_waits",
+                    "spins"
+                ],
+                "subPaths": [
+                    "classname"
+                ],
+                "delta": true,
+                "database": "sysmaster"
+            },
+            "opts": {
+            }
+        },
+        {
+            "name": "sysbufpool",
+            "type": {
+                "enabled": true,
+                "query": "     SELECT       TRIM(CAST(bufsize/1024 AS CHAR(2))) || '_kb' bufsize,       dskreads,       pagreads,       bufreads,       dskwrites,       pagwrites,       bufwrites,       bufwaits,       chunkwrites     FROM       sysbufpool",
+                "dataFields": [
+                    "dskreads",
+                    "pagreads",
+                    "bufreads",
+                    "dskwrites",
+                    "pagwrites",
+                    "bufwrites",
+                    "bufwaits",
+                    "chunkwrites"
+                ],
+                "subPaths": [
+                    "bufsize"
+                ],
+                "delta": true,
+                "database": "sysmaster"
+            },
+            "opts": {
+            }
+        },
+        {
+            "name": "virtual_segment",
+            "type": {
+                "enabled": true,
+                "query": "     SELECT       'num_segments' metric,       COUNT(*) value     FROM       sysseglst     WHERE       seg_class = 2     UNION ALL     SELECT       'virtual_used_gb' metric,       SUM(seg_blkused)/262144 value     FROM       sysseglst     WHERE       seg_class = 2     UNION ALL     SELECT       'vp_cache_size_gb' metric,       SUM(vp_cache_size)/262144 value     FROM       sysvplst     UNION ALL     SELECT       'total_pool_size_gb' metric,       SUM(po_usedamt)/1073741824 value     FROM       syspools     WHERE       po_class = 2     UNION ALL     SELECT       TRIM(po_name) || '_pool_gb' metric,       SUM(po_usedamt)/1073741824 value     FROM       syspools     WHERE       po_class = 2 AND       po_name IN ('dictpool', 'global', 'mt', 'rsam', 'aio', 'dstpool', 'procpool')     GROUP BY       metric",
+                "dataFields": [
+                    "value"
+                ],
+                "subPaths": [
+                    "metric"
+                ],
+                "useDataField": false,
+                "database": "sysmaster"
+            },
+            "opts": {
+            }
+        },
+        {
+            "name": "syslocks",
+            "type": {
+                "enabled": true,
+                "query": "     SELECT      'total_locks' metric, (      SELECT        COUNT(*)      FROM        syslocks      WHERE        dbsname != 'sysmaster' AND        tabname != 'sysdatabases' ) AS count    FROM      sysdual    UNION ALL    SELECT      'locks_with_waiter' metric, (      SELECT        COUNT(*)      FROM        syslocks      WHERE        waiter IS NOT NULL AND        dbsname != 'sysmaster' AND        tabname != 'sysdatabases' ) AS count    FROM      sysdual",
+                "dataFields": [
+                    "count"
+                ],
+                "subPaths": [
+                    "metric"
+                ],
+                "useDataField": false,
+                "database": "sysmaster"
+            },
+            "opts": {
+            }
+        },
+        {
+            "name": "sysextents-mydatabase",
+            "type": {
+                "enabled": true,
+                "query": "         SELECT           \"mydatabase\" || ':' || t.tabname AS object_name,           count(*) num_extents,           ROUND(t.npused*(t.pagesize/1024)/1024) AS total_mb,           ROUND(SUM(e.size*(t.pagesize/1024))/1024) AS total_extent_mb         FROM           sysmaster:sysextents e,           mydatabase:systables t         WHERE           e.tabname=t.tabname AND           dbsname = \"mydatabase\" AND           t.tabid > 99         GROUP BY           object_name,           total_mb         HAVING           ROUND(SUM(e.size*(t.pagesize/1024))) > 10000000",
+                "dataFields": [
+                    "num_extents",
+                    "total_mb",
+                    "total_extent_mb"
+                ],
+                "subPaths": [
+                    "object_name"
+                ],
+                "database": "sysmaster"
+            },
+            "opts": {
+            }
+        },
+        {
+            "name": "syssqlstat",
+            "type": {
+                "enabled": true,
+                "query": "     SELECT       sqs_sqlerror || ',' || sqs_isamerror error_code,       count(*) num_sessions     FROM       syssqlstat     WHERE       sqs_sqlerror || ',' || sqs_isamerror != '0,0'     GROUP BY       error_code",
+                "dataFields": [
+                    "num_sessions"
+                ],
+                "subPaths": [
+                    "error_code"
+                ],
+                "database": "sysmaster"
+            },
+            "opts": {
+            }
+        },
+        {
+            "name": "systrans",
+            "type": {
+                "enabled": true,
+                "query": "     SELECT       COUNT(*) as open_transactions,       SUM(tx_nlocks) total_locks     FROM       systrans",
+                "database": "sysmaster"
+            },
+            "opts": {
+            }
+        },
+        {
+            "name": "mutexes",
+            "type": {
+                "enabled": true,
+                "query": "     SELECT       COUNT(*) as mutex_count     FROM       sysmutexes     WHERE       mtx_holder != 0",
+                "database": "sysmaster"
+            },
+            "opts": {
+            }
+        },
+        {
+            "name": "tempspace",
+            "type": {
+                "enabled": true,
+                "query": "     SELECT       trim(name) as name,       round(((sum(chksize) - sum(nfree))/sum(chksize))*100) as percent_used     FROM       sysdbspaces d,       syschunks c     WHERE       d.dbsnum = c.dbsnum       AND d.is_temp = 1       GROUP BY       name",
+                "dataFields": [
+                    "percent_used"
+                ],
+                "subPaths": [
+                    "name"
+                ],
+                "database": "sysmaster"
+            },
+            "opts": {
+            }
+        },
+        {
+            "name": "chunks",
+            "type": {
+                "enabled": true,
+                "query": "     SELECT       SUM((chksize-nfree)*2)/1048576 AS chunk_used_gb,       (SUM(chksize)*2)/1048576 AS chunk_total_gb     FROM       syschunks",
+                "dataFields": [
+                    "chunk_used_gb",
+                    "chunk_total_gb"
+                ],
+                "database": "sysmaster"
+            },
+            "opts": {
+            }
+        },
+        {
+            "name": "dbsize",
+            "type": {
+                "enabled": true,
+                "query": "     SELECT       SUM(nptotal*(pagesize/1024))/1048576 AS extents_alloc_gb,       SUM(npused*(pagesize/1024))/1048576 AS used_gb,       SUM(npdata*(pagesize/1024))/1048576 AS data_gb,       SUM(nextns) num_extents     FROM       sysptnhdr",
+                "dataFields": [
+                    "extents_alloc_gb",
+                    "used_gb",
+                    "data_gb",
+                    "num_extents"
+                ],
+                "database": "sysmaster"
+            },
+            "opts": {
+            }
+        }
+    ]
+}
+

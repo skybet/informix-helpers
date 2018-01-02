@@ -1,0 +1,5846 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "hideControls": false,
+  "id": null,
+  "links": [],
+  "refresh": "10s",
+  "rows": [
+    {
+      "collapse": false,
+      "height": "250px",
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "informix",
+          "fill": 1,
+          "id": 7,
+          "interval": ">10s",
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [
+            {
+              "alias": "spins-cpu",
+              "yaxis": 2
+            }
+          ],
+          "spaceLength": 10,
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "semops-cpu",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"spins-*\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysvplst"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "busy_waits-cpu",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"spins-*\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysvplst"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "spins-cpu",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"spins-*\" WHERE $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysvplst"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Virtual processor profile",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Dashboard Row",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": 250,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "informix",
+          "fill": 1,
+          "id": 1,
+          "interval": ">10s",
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "virtual_used",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-virtual_used_gb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"value-virtual_used_gb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "virtual_segment"
+                }
+              ]
+            },
+            {
+              "alias": "procpool",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-procpool_pool_gb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"value-procpool_pool_gb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "virtual_segment"
+                }
+              ]
+            },
+            {
+              "alias": "vp_cache_size",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-vp_cache_size_gb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"value-vp_cache_size_gb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "virtual_segment"
+                }
+              ]
+            },
+            {
+              "alias": "aio_pool",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-aio_pool_gb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"value-aio_pool_gb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "virtual_segment"
+                }
+              ]
+            },
+            {
+              "alias": "total_pool_size",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-total_pool_size_gb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"value-total_pool_size_gb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "virtual_segment"
+                }
+              ]
+            },
+            {
+              "alias": "mt_pool",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-mt_pool_gb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"value-mt_pool_gb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "F",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "virtual_segment"
+                }
+              ]
+            },
+            {
+              "alias": "global_pool",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-global_pool_gb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"value-global_pool_gb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "G",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "virtual_segment"
+                }
+              ]
+            },
+            {
+              "alias": "dst_pool",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-dstpool_pool_gb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"value-dstpool_pool_gb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "H",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "virtual_segment"
+                }
+              ]
+            },
+            {
+              "alias": "dict_pool",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-dictpool_pool_gb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"value-dictpool_pool_gb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "I",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "virtual_segment"
+                }
+              ]
+            },
+            {
+              "alias": "rsam_pool",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-rsam_pool_gb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"value-rsam_pool_gb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "J",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "virtual_segment"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Virtual segment usage by pools",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "decgbytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "informix",
+          "fill": 1,
+          "id": 14,
+          "interval": ">10s",
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "virtual_segment_used",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-virtual_used_gb",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "virtual_segment"
+                }
+              ]
+            },
+            {
+              "alias": "total_pool_size",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-total_pool_size_gb",
+              "policy": "default",
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "virtual_segment"
+                }
+              ]
+            },
+            {
+              "alias": "vp_cache",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-vp_cache_size_gb",
+              "policy": "default",
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "virtual_segment"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Virtual segment usage",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "decgbytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Dashboard Row",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": 250,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "informix",
+          "fill": 1,
+          "id": 5,
+          "interval": ">10s",
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "flushes",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "measurement": "value-flushes",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"value-flushes\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval)",
+              "rawQuery": false,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "compress",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "measurement": "value-compress",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"value-compress\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval)",
+              "rawQuery": false,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "lruwrites",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "measurement": "value-lruwrites",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"value-lruwrites\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval)",
+              "rawQuery": false,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "chunkwrites",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "measurement": "value-chunkwrites",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"value-chunkwrites\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval)",
+              "rawQuery": false,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "dpra",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "measurement": "value-dpra",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"value-dpra\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval)",
+              "rawQuery": false,
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "rapgs_used",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "measurement": "value-rapgs_used",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"value-rapgs_used\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval)",
+              "rawQuery": false,
+              "refId": "F",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "seqscans",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "measurement": "value-seqscans",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"value-seqscans\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval)",
+              "rawQuery": false,
+              "refId": "G",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "btraidx",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "measurement": "value-btraidx",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"value-btraidx\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval)",
+              "rawQuery": false,
+              "refId": "H",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "memsorts",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "measurement": "value-mems",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"value-mems\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval)",
+              "rawQuery": false,
+              "refId": "I",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "disksorts",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                }
+              ],
+              "hide": false,
+              "measurement": "value-disksorts",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"value-disksorts\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval)",
+              "rawQuery": false,
+              "refId": "J",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Informix profile",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "informix",
+          "fill": 1,
+          "id": 8,
+          "interval": ">10s",
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [
+            {
+              "alias": "db_object_locks",
+              "yaxis": 2
+            },
+            {
+              "alias": "locks_with_waiter",
+              "yaxis": 2
+            }
+          ],
+          "spaceLength": 10,
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "measurement": "open_transactions",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "systrans"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "measurement": "total_locks",
+              "policy": "default",
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "systrans"
+                }
+              ]
+            },
+            {
+              "alias": "lockwts",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "measurement": "value-lockwts",
+              "policy": "default",
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "db_object_locks",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "measurement": "count-total_locks",
+              "policy": "default",
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "syslocks"
+                }
+              ]
+            },
+            {
+              "alias": "locks_with_waiter",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "hide": false,
+              "measurement": "count-locks_with_waiter",
+              "policy": "default",
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "syslocks"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Locks",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Dashboard Row",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": 250,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "informix",
+          "fill": 1,
+          "id": 9,
+          "interval": ">10s",
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [
+            {
+              "alias": "/^pagreads-/",
+              "yaxis": 2
+            },
+            {
+              "alias": "/^dskreads-/",
+              "yaxis": 2
+            }
+          ],
+          "spaceLength": 10,
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "bufreads-2_kb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"bufreads-2_kb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'sysbufpool' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysbufpool"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "bufreads-4_kb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"bufreads-2_kb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'sysbufpool' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysbufpool"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "bufreads-8_kb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"bufreads-2_kb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'sysbufpool' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysbufpool"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "bufreads-16_kb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"bufreads-2_kb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'sysbufpool' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysbufpool"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "pagreads-2_kb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"bufreads-2_kb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'sysbufpool' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysbufpool"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "pagreads-4_kb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"bufreads-2_kb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'sysbufpool' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "F",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysbufpool"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "pagreads-8_kb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"bufreads-2_kb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'sysbufpool' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "G",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysbufpool"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "pagreads-16_kb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"bufreads-2_kb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'sysbufpool' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "H",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysbufpool"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "dskreads-2_kb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"bufreads-2_kb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'sysbufpool' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "I",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysbufpool"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "dskreads-4_kb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"bufreads-2_kb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'sysbufpool' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "J",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysbufpool"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "dskreads-8_kb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"bufreads-2_kb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'sysbufpool' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "K",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysbufpool"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "dskreads-16_kb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"bufreads-2_kb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'sysbufpool' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "L",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysbufpool"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Buffer, page and disk reads",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "informix",
+          "fill": 1,
+          "id": 10,
+          "interval": ">10s",
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [
+            {
+              "alias": "/^pagwrites-/",
+              "yaxis": 2
+            },
+            {
+              "alias": "/^dskwrites-/",
+              "yaxis": 2
+            }
+          ],
+          "spaceLength": 10,
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "bufwrites-2_kb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"bufreads-2_kb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'sysbufpool' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysbufpool"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "bufwrites-4_kb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"bufreads-2_kb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'sysbufpool' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysbufpool"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "bufwrites-8_kb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"bufreads-2_kb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'sysbufpool' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysbufpool"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "bufwrites-16_kb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"bufreads-2_kb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'sysbufpool' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysbufpool"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "pagwrites-2_kb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"bufreads-2_kb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'sysbufpool' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysbufpool"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "pagwrites-4_kb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"bufreads-2_kb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'sysbufpool' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "F",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysbufpool"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "pagwrites-8_kb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"bufreads-2_kb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'sysbufpool' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "G",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysbufpool"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "pagwrites-16_kb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"bufreads-2_kb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'sysbufpool' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "H",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysbufpool"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "dskwrites-2_kb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"bufreads-2_kb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'sysbufpool' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "I",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysbufpool"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "dskwrites-4_kb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"bufreads-2_kb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'sysbufpool' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "J",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysbufpool"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "dskwrites-8_kb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"bufreads-2_kb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'sysbufpool' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "K",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysbufpool"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "dskwrites-16_kb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"bufreads-2_kb\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'sysbufpool' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "L",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysbufpool"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Buffer, page and disk writes",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Dashboard Row",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": 250,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "informix",
+          "fill": 1,
+          "id": 11,
+          "interval": ">10s",
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [
+            {
+              "alias": "latchwts",
+              "yaxis": 2
+            }
+          ],
+          "spaceLength": 10,
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "buffwts",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-buffwts",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "lockwts",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-lockwts",
+              "policy": "default",
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "ckptwts",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-ckptwts",
+              "policy": "default",
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "latchwts",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-latchwts",
+              "policy": "default",
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Buffer, lock, checkpoint and latch waits",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "informix",
+          "fill": 1,
+          "id": 13,
+          "interval": ">10s",
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [
+            {
+              "alias": "llgpagewrites",
+              "yaxis": 2
+            },
+            {
+              "alias": "llgrecs",
+              "yaxis": 2
+            },
+            {
+              "alias": "plgpagewrites",
+              "yaxis": 2
+            }
+          ],
+          "spaceLength": 10,
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "plgwrites",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-plgwrites",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "llgwrites",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-llgwrites",
+              "policy": "default",
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "llgpagewrites",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-llgpagewrites",
+              "policy": "default",
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "llgrecs",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-llgrecs",
+              "policy": "default",
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "plgpagewrites",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-plgpagewrites",
+              "policy": "default",
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Physical and logical logging",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Dashboard Row",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": 250,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "informix",
+          "fill": 1,
+          "id": 12,
+          "interval": ">10s",
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [
+            {
+              "alias": "reads",
+              "yaxis": 2
+            }
+          ],
+          "spaceLength": 10,
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "opens",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-isopens",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "starts",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-isstarts",
+              "policy": "default",
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "writes",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-iswrites",
+              "policy": "default",
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "rewrites",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-isrewrites",
+              "policy": "default",
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "deletes",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-isdeletes",
+              "policy": "default",
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "commits",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "commits",
+              "policy": "default",
+              "refId": "F",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "rollbacks",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-isrollbacks",
+              "policy": "default",
+              "refId": "G",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "reads",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-isreads",
+              "policy": "default",
+              "refId": "H",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "ISAM operations",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "informix",
+          "fill": 1,
+          "id": 16,
+          "interval": ">10s",
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null as zero",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "mutex_count",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "mutexes"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "ready-cpu",
+              "policy": "default",
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysvplst"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "ready-soc",
+              "policy": "default",
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysvplst"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Ready threads and mutexes",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Dashboard Row",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": 250,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "informix",
+          "fill": 1,
+          "id": 15,
+          "interval": ">10s",
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "deadlocks",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-deadlks",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "lock_timeouts",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-lktouts",
+              "policy": "default",
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            },
+            {
+              "alias": "foreground_writes",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "value-fgwrites",
+              "policy": "default",
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "sysprofile"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Bad stuff",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "informix",
+          "fill": 1,
+          "id": 6,
+          "interval": ">10s",
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "tmp2k_1",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "percent_used-tmp2k_1",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"percent_used-tmp2k_1\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "tempspace"
+                }
+              ]
+            },
+            {
+              "alias": "tmp2k_2",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "percent_used-tmp2k_2",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"percent_used-tmp2k_2\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "tempspace"
+                }
+              ]
+            },
+            {
+              "alias": "tmp2k_3",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "percent_used-tmp2k_3",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"percent_used-tmp2k_3\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "tempspace"
+                }
+              ]
+            },
+            {
+              "alias": "tmp2k_4",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "percent_used-tmp2k_4",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"percent_used-tmp2k_4\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "tempspace"
+                }
+              ]
+            },
+            {
+              "alias": "tmp2k_5",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "percent_used-tmp2k_5",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"percent_used-tmp2k_5\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "E",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "tempspace"
+                }
+              ]
+            },
+            {
+              "alias": "tmp2k_6",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "percent_used-tmp2k_6",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"percent_used-tmp2k_6\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "F",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "tempspace"
+                }
+              ]
+            },
+            {
+              "alias": "tmp2k_7",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "percent_used-tmp2k_7",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"percent_used-tmp2k_7\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "G",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "tempspace"
+                }
+              ]
+            },
+            {
+              "alias": "tmp2k_8",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "percent_used-tmp2k_8",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"percent_used-tmp2k_8\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "H",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "tempspace"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Temporary dbspace usage",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "percent",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Dashboard Row",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": 250,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "informix",
+          "fill": 1,
+          "id": 17,
+          "interval": ">10s",
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null as zero",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "-206,-111",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "num_sessions--206,-111",
+              "policy": "default",
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "syssqlstat"
+                }
+              ]
+            },
+            {
+              "alias": "-255,0",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "num_sessions--255,0",
+              "policy": "default",
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "syssqlstat"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "SQL error codes",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Dashboard Row",
+      "titleSize": "h6"
+    },
+    {
+      "collapse": false,
+      "height": 250,
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "informix",
+          "fill": 1,
+          "id": 19,
+          "interval": ">10s",
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [
+            {
+              "alias": "num_extents",
+              "yaxis": 2
+            }
+          ],
+          "spaceLength": 10,
+          "span": 6,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "data_gb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"measurement\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'dbsize' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "A",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "dbsize"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "extents_alloc_gb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"measurement\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'dbsize' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "B",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "dbsize"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "used_gb",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"measurement\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'dbsize' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "C",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "dbsize"
+                }
+              ]
+            },
+            {
+              "alias": "$m",
+              "dsType": "influxdb",
+              "groupBy": [
+                {
+                  "params": [
+                    "$interval"
+                  ],
+                  "type": "time"
+                },
+                {
+                  "params": [
+                    "null"
+                  ],
+                  "type": "fill"
+                }
+              ],
+              "measurement": "num_extents",
+              "policy": "default",
+              "query": "SELECT mean(\"value\") FROM \"measurement\" WHERE \"INFORMIXSERVER\" = '<%= @informixserver %>' AND \"category\" = 'dbsize' AND $timeFilter GROUP BY time($interval) fill(null)",
+              "rawQuery": false,
+              "refId": "D",
+              "resultFormat": "time_series",
+              "select": [
+                [
+                  {
+                    "params": [
+                      "value"
+                    ],
+                    "type": "field"
+                  },
+                  {
+                    "params": [],
+                    "type": "mean"
+                  }
+                ]
+              ],
+              "tags": [
+                {
+                  "key": "INFORMIXSERVER",
+                  "operator": "=",
+                  "value": "<%= @informixserver %>"
+                },
+                {
+                  "condition": "AND",
+                  "key": "category",
+                  "operator": "=",
+                  "value": "dbsize"
+                }
+              ]
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Database size",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "decgbytes",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "repeat": null,
+      "repeatIteration": null,
+      "repeatRowId": null,
+      "showTitle": false,
+      "title": "Dashboard Row",
+      "titleSize": "h6"
+    }
+  ],
+  "schemaVersion": 14,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-30m",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ],
+    "time_options": [
+      "5m",
+      "15m",
+      "1h",
+      "6h",
+      "12h",
+      "24h",
+      "2d",
+      "7d",
+      "30d"
+    ]
+  },
+  "timezone": "browser",
+  "title": "Informix metrics for <%= @informixserver %>@<%= @hostname %>",
+  "version": 1
+}
