@@ -216,8 +216,7 @@ sub dbconnect () {
 		'PrintError' => 1,
 		'RaiseError' => 1,
 		'AutoCommit' => 1,
-		'ChopBlanks' => 1,
-		'ix_WithoutReplication' => 0,
+		'ChopBlanks' => 1
 	);
 
 	$dbh{$dbname} = DBI->connect("dbi:Informix:${dbname}\@$ENV{'INFORMIXSERVER'}", '', '', \%attr) or die ("$DBI::errstr\n\n");
