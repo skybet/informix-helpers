@@ -7,7 +7,7 @@ use Getopt::Std;
 use JSON;
 use Sys::Hostname;
 use WWW::Curl::Easy;
-use vars qw(%dbh %sth %dataidx %subidx %colname %lastval $dontspamlogs);
+use vars qw(%dbh %sth %dataidx %subidx %colname %lastval $dontspamlogs @handles);
 
 $SIG{INT} = \&dbdisconnect;
 
@@ -89,6 +89,7 @@ sub collect_metrics () {
 			}
 			if (!$sth{$db} || !$sth{$db}{$$source{'name'}}) {
 				$sth{$db}{$$source{'name'}} = $dbh{$db}->prepare($$source{'type'}{'query'});
+				push (@handles, $$source{'name'});
 			}
 			$sth{$db}{$$source{'name'}}->execute();
 			my $rows = 0;
@@ -216,8 +217,7 @@ sub dbconnect () {
 		'PrintError' => 1,
 		'RaiseError' => 1,
 		'AutoCommit' => 1,
-		'ChopBlanks' => 1,
-		'ix_WithoutReplication' => 0,
+		'ChopBlanks' => 1
 	);
 
 	$dbh{$dbname} = DBI->connect("dbi:Informix:${dbname}\@$ENV{'INFORMIXSERVER'}", '', '', \%attr) or die ("$DBI::errstr\n\n");
@@ -228,8 +228,8 @@ sub dbdisconnect {
 
 	foreach my $db (keys %dbh) {
 		if ($sth{$db}) {
-			foreach my $source (keys $sth{$db}) {
-				$sth{$db}{$source}->finish();
+			for (my $i = 0; $i < scalar(@handles); $i++) {
+				$sth{$db}{$handles[$i]}->finish();
 			}
 		}
 
