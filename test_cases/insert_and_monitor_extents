@@ -1,0 +1,124 @@
+#!/usr/bin/perl
+
+# Insert into an Informix table with an index and show extent sizes used
+# Change system page size below if not 2 kB
+
+# First create a table using the following SQL:
+
+# create table t1 (
+#   myid bigserial not null,
+#   mydata varchar(254) not null
+# ) in my4kspace extent size 16 next size 16 ;
+# create unique index ui_t1 on t1 (myid) in my4kspace;
+
+# You can play around with the page size of the dbspaces used and the first and next extent sizes.
+
+use strict;
+use warnings;
+
+use DBI;
+
+my $systempagesize = 2;
+
+&main;
+
+sub main {
+
+	&check_params;
+	my ($dbh) = &dbconnect($ENV{'DBNAME'});
+	&preserve($dbh);
+	&dbdisconnect($dbh);
+	exit 0;
+}
+
+sub preserve () {
+
+	my $dbh = shift;
+
+	my $lastnextsiz = 0;
+	my $lastnptotal = 0;
+	my $ilastnextsiz = 0;
+	my $ilastnptotal = 0;
+	my $str = 'NtOJOES9DuWzB2YnHelotfpplbtwAbJ8ae9MFPL7FypjhAhz4KYEJJtxhrwfBPTLPFYKnK9sJg3xLnicKjFV4ue5lIX2mYJ6oGSxKFw3yVyDqSZrvv0LO7QDffgqUqTubD1zCo5GJFlwlLpe0RTnCh7PugIhHpMWtbEWRoyBNEujSHf60iccDGBDVi4Ul1P1aD4IFo2cWgJMULtJuPkZPpCNaON4VXTGsVBIqPbooiLVE1NANSu1RyZSE2nc5f';
+	my $sql = "INSERT INTO t1 (mydata) VALUES (?)";
+	my $sth = $$dbh->prepare($sql);
+
+	my $sql2 = "SELECT nextsiz, nptotal, nrows, pagesize FROM sysmaster:sysptnhdr where partnum=(select partnum FROM systables where tabname='t1')";
+	my $sth2 = $$dbh->prepare($sql2);
+
+	my $sql3 = "SELECT nextsiz, nptotal, pagesize FROM sysmaster:sysptnhdr where partnum=(select partn FROM sysfragments where indexname='ui_t1')";
+	my $sth3 = $$dbh->prepare($sql3);
+
+	while (1) {
+		my ($nextsiz, $nptotal, $nrows, $pagesize, $inextsiz, $inptotal, $inrows, $ipagesize);
+		my $length = int(rand(254));
+		my $string = substr($str, $length);
+		$sth->execute($string);
+		$sth2->execute();
+		$sth2->bind_columns(undef, \$nextsiz, \$nptotal, \$nrows, \$pagesize);
+		$sth2->fetch();
+		$sth3->execute();
+		$sth3->bind_columns(undef, \$inextsiz, \$inptotal, \$ipagesize);
+		$sth3->fetch();
+		if ($lastnextsiz != $nextsiz || $lastnptotal != $nptotal) {
+			printf ("TABLE: Next size: %d kB (%d pages); nptotal: %d (%d kB); nrows: %d", $nextsiz*$systempagesize, $nextsiz*$systempagesize/($pagesize/1024), $nptotal, $nptotal*$pagesize/1024, $nrows);
+			if ($lastnptotal > 0) {
+				printf("; ratio: %.2f", ($lastnextsiz*2)/($lastnptotal*$pagesize/1024)*100);
+				printf(" (%d kB -> %d kB)", $lastnextsiz*$systempagesize, $nextsiz*$systempagesize) if ($lastnextsiz != $nextsiz);
+			}
+			print "\n";
+			$lastnextsiz = $nextsiz;
+			$lastnptotal = $nptotal;
+		}
+		if ($ilastnextsiz != $inextsiz || $ilastnptotal != $inptotal) {
+			printf ("INDEX: Next size: %d kB (%d pages); nptotal: %d (%d kB)", $inextsiz*$systempagesize, $inextsiz*$systempagesize/($ipagesize/1024), $inptotal, $inptotal*$ipagesize/1024);
+			if ($ilastnptotal > 0) {
+				printf("; ratio: %.2f", ($ilastnextsiz*$systempagesize)/($ilastnptotal*$ipagesize/1024)*100);
+				printf(" (%d kB -> %d kB)", $ilastnextsiz*$systempagesize, $inextsiz*$systempagesize) if ($ilastnextsiz != $inextsiz);
+			}
+			print "\n";
+			$ilastnextsiz = $inextsiz;
+			$ilastnptotal = $inptotal;
+		}
+	}
+
+	$sth3->finish();
+	$sth2->finish();
+	$sth->finish();
+}
+
+sub check_params () {
+
+	die print "INFORMIXDIR is not set.\n" unless $ENV{'INFORMIXDIR'};
+	die print "INFORMIXDIR is not set to a valid directory (\'$ENV{'INFORMIXDIR'}\').\n" unless -d $ENV{'INFORMIXDIR'};
+	die print "INFORMIXSERVER is not set.\n" unless $ENV{'INFORMIXSERVER'};
+	die print "DBNAME is not set.\n" unless $ENV{'DBNAME'};
+}
+
+sub dbconnect {
+
+	my $dbname = shift;
+
+	my %attr = (
+		'PrintError' => 1,
+		'RaiseError' => 1,
+		'AutoCommit' => 1,
+		'ChopBlanks' => 1,
+		'ix_WithoutReplication' => 0,
+	);
+
+	my $dbh = DBI->connect("dbi:Informix:$dbname\@$ENV{'INFORMIXSERVER'}", '', '', \%attr) or die ("$DBI::errstr\n\n");
+	$dbh->do('SET LOCK MODE TO WAIT 10') or die ("Can\'t set lock mode: $DBI::errstr\n");
+
+	return (\$dbh);
+}
+
+sub dbdisconnect {
+
+	my $dbh = shift;
+
+	if ($$dbh) {
+		$$dbh->disconnect;
+	}
+}
+
