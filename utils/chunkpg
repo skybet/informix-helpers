@@ -1,0 +1,155 @@
+#!/usr/bin/perl
+
+# Decipher chunk and page numbers
+
+use strict;
+use warnings;
+
+&main;
+
+sub main {
+
+	my $key = &check_params;
+	my $onstat = &check_state;
+
+	my $chunkno = 0;
+	my $nextinfo = 0;
+	my $pagesize = 0;
+	my $count = 0;
+	my $lastdbs = '';
+	my $syspagesize = 2;
+
+	my (%objs, %start, %end, %c, %ps, %dbs);
+
+	open (ONCHECKPE, "oncheck -pe |");
+	while (<ONCHECKPE>) {
+		chomp;
+		if ($nextinfo == 1) {
+			$nextinfo = 0;
+			my ($blank, $path, $size, $used, $free);
+			($blank, $chunkno, $path, $pagesize, $size, $used, $free) = split / +/;
+			# print "$chunkno: $pagesize kb\n";
+			$count = 0;
+			$c{$chunkno} = 0;
+			$ps{$chunkno} = $pagesize;
+		}
+		elsif ($_ eq ' Chunk Pathname                             Pagesize(k)  Size(p)  Used(p)  Free(p)') {
+			$nextinfo = 1;
+		}
+		elsif ($_ =~ /^DBspace Usage Report: /) {
+			my @parts = split / +/;
+			$lastdbs = $parts[3];
+			$dbs{$chunkno} = $lastdbs;
+		}
+		elsif ($_ =~ /^ \w+:\'\w+\'\.\w+ +/) {
+			$count++;
+			my ($blank, $obj, $offset, $size) = split / +/;
+			# printf ("%s: %d -> %d\n", $obj, $offset*2, $offset*2+$size*2);
+			$objs{$chunkno}{$count} = $obj;
+			$start{$chunkno}{$count} = $offset;
+			$end{$chunkno}{$count} = $size + $offset;
+			$c{$chunkno}++;
+			if (!$dbs{$chunkno}) {
+				$dbs{$chunkno} = $lastdbs;
+			}
+		}
+	}
+	close (ONCHECKPE);
+
+	while (<STDIN>) {
+		chomp;
+		print "$_ ";
+		$_ =~ s/^ +//;
+		my @vals = split / +/;
+		if ($vals[$key-1] && $vals[$key-1] =~ /\d+\:\d+/) {
+			my ($chunk, $page) = split /\:/, $vals[$key-1];
+			for (my $i = 1; $i <= $c{$chunk}; $i++) {
+				if ($start{$chunk}{$i} && $page/($ps{$chunk}/$syspagesize) >= $start{$chunk}{$i} && $end{$chunk}{$i} && $page/($ps{$chunk}/$syspagesize) <= $end{$chunk}{$i}) {
+					print $objs{$chunk}{$i}.','.$dbs{$chunk};
+					last;
+				}
+			}
+		}
+		print "\n";
+	}
+}
+
+sub check_params () {
+
+	die print "INFORMIXDIR is not set.\n" unless $ENV{'INFORMIXDIR'};
+	die print "INFORMIXDIR is not set to a valid directory (\'$ENV{'INFORMIXDIR'}\').\n" unless -d $ENV{'INFORMIXDIR'};
+	die print "INFORMIXSERVER is not set.\n" unless $ENV{'INFORMIXSERVER'};
+
+	if ($ARGV[0] && $ARGV[0] eq '-k') {
+		if ($ARGV[1] && $ARGV[1] !~ /\D/) {
+			return ($ARGV[1]);
+		}
+		else {
+			print "Invalid key number: $ARGV[1]\n";
+			exit 1;
+		}
+	}
+	elsif ($ARGV[0]) {
+		print "Invalid parameter: $ARGV[1]\n";
+		exit 1;
+	}
+	return (1);
+}
+
+sub check_state () {
+
+	my ($onstat);
+	eval {
+		local $SIG{ALRM} = sub { print "Onstat command failed to complete after 300 seconds.\n"; };
+		alarm 300;
+		$onstat = system("onstat - >/dev/null 2>/dev/null");
+		alarm 0;
+	};
+	if (@$) {
+		print @$;
+		exit 1;
+	}
+
+	$onstat = $onstat >> 8;
+
+	if ($onstat == -1 || $onstat == 255) {
+		print "Informix instance $ENV{'INFORMIXSERVER'} is not running.\n";
+		exit 1;
+	}
+	elsif ($onstat == 0) {
+		print "Informix instance $ENV{'INFORMIXSERVER'} is initialising.\n";
+		exit 1;
+	}
+	elsif ($onstat == 1) {
+		print "Informix instance $ENV{'INFORMIXSERVER'} is in quiescent mode.\n";
+		exit 1;
+	}
+	elsif ($onstat == 2) {
+		# This is usually the return code on an RSS
+	}
+	elsif ($onstat == 3) {
+		print "Informix instance $ENV{'INFORMIXSERVER'} is in backup mode.\n";
+		exit 1;
+	}
+	elsif ($onstat == 4) {
+		print "Informix instance $ENV{'INFORMIXSERVER'} is shutting down.\n";
+		exit 1;
+	}
+	elsif ($onstat == 5) {
+		# Online
+	}
+	elsif ($onstat == 6) {
+		# Don't want to interrupt any shared memory dumping
+		print "Informix instance $ENV{'INFORMIXSERVER'} is aborting.\n";
+		exit 1;
+	}
+	elsif ($onstat == 7) {
+		print "Informix instance $ENV{'INFORMIXSERVER'} is in single-user mode.\n";
+	}
+	else {
+		print "Informix instance $ENV{'INFORMIXSERVER'}: unknown return code $onstat reported by \'onstat -\'.\n";
+		exit 1;
+	}
+	return(\$onstat);
+}
+
